@@ -1,5 +1,5 @@
 from time import sleep
-from Banco_de_Dados.cores import verde, negrito, limpa, amarelo
+from Banco_de_Dados.cores import verde, negrito, limpa, amarelo, vermelho
 
 
 def cabeçalho(txt, cor=verde, temp=0.1):
@@ -13,8 +13,11 @@ def cadastrar():
     cabeçalho('NOVO CADASTRO')
     nome = str(input('Digite o nome: '))
     idade = int(input('Digite a idade: '))
+    cabeçalho('Processando...', temp=0.5)
     if usuarioExiste('cadastros.txt', f'{nome};{idade}'):
-        pass
+        cabeçalho('Usuário já existe!', vermelho)
+        sleep(1)
+        cabeçalho('Retornando ao menu principal...', temp=1)
     else:
         cabeçalho('Processando...', temp=0.5)
         with open('cadastros.txt', 'a+', encoding='utf-8') as arquivo:
@@ -60,6 +63,6 @@ def usuarioExiste(arquivo, usuarioe):
             dados = linha.split(';')
             users = usuarioe.split(';')
             if dados [0] == users[0] and int(dados[1]) == int(users[1]):
-                print('Existe')
+                return True
             else:
-                print('Não existe')
+                return False
